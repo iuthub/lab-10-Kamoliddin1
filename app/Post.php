@@ -1,10 +1,16 @@
 <?php
 
 namespace App;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
     protected $fillable = ['title', 'content'];
 
     public function likes()
@@ -17,11 +23,13 @@ class Post extends Model
         return $this->belongsToMany('App\Tag', 'post_tag', 'post_id', 'tag_id')->withTimestamps();
     }
 
-    public function setTitleAttribute($value) {
+    public function setTitleAttribute($value)
+    {
         $this->attributes['title'] = strtolower($value);
     }
 
-    public function getTitleAttribute($value) {
+    public function getTitleAttribute($value)
+    {
         return strtoupper($value);
     }
 }
